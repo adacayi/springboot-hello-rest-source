@@ -12,12 +12,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.web.client.RestTemplate;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @RunWith(SpringRunner.class)
@@ -53,6 +55,7 @@ public class GreetingControllerTest {
                 String.format(saying, name) + " Message from " + backendServiceHost + ":" + backendServicePort,
                 LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(), getIp());
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/backend/greeting?name=" + name));
+        resultActions.andDo(print()).andExpect(status().isOk());
         String actualString = resultActions.andReturn().getResponse().getContentAsString();
         GreetingDTO actual = asObject(actualString, GreetingDTO.class);
         expected.setTime(actual.getTime());
@@ -61,7 +64,7 @@ public class GreetingControllerTest {
     }
 
     private String getIp() {
-        String hostname = null;
+        String hostname;
         try {
             hostname = InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
