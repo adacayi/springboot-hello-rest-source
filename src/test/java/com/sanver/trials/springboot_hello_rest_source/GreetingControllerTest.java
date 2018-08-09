@@ -49,7 +49,6 @@ public class GreetingControllerTest {
 
     @Test
     public void shouldReturnNameAndGreeting() throws Exception {
-        GreetingController controller = new GreetingController();
         String name = "Ahmet";
         GreetingDTO expected = new GreetingDTO(
                 String.format(saying, name) + " Message from " + backendServiceHost + ":" + backendServicePort,
