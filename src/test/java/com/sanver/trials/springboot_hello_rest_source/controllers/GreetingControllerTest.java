@@ -48,7 +48,7 @@ public class GreetingControllerTest {
     }
 
     @Test
-    public void should_ReturnAbdullah35BirthDate() throws Exception {
+    public void should_ReturnMessageAhmetAgeBirthDate() throws Exception {
         String name = "Ahmet";
         LocalDate birthDate = LocalDate.of(2016, 3, 10);
         int age = birthDate.until(LocalDate.now()).getYears();
