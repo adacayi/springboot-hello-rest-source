@@ -40,11 +40,13 @@ public class GreetingControllerTest {
 
     @Test
     public void should_ReturnAbdullah35BirthDate() throws Exception {
-        String name = "Abdullah";
-        int age = 35;
-        LocalDate birthDate = LocalDate.of(1983, 9, 10);
-        GreetingDTO expectedClass = new GreetingDTO(name, String.format(greetingMessage, name, age, birthDate), age, birthDate, LocalTime.now(), getIp());
-        ResultActions perform = mockMvc.perform(get("/greeting/greet?name=Abdullah&age=35&birthdate=19830910"));
+        String name = "Ahmet";
+        LocalDate birthDate = LocalDate.of(2016, 3, 10);
+        int age = birthDate.until(LocalDate.now()).getYears();
+        GreetingDTO expectedClass = new GreetingDTO(name, String.format(greetingMessage, name, age, birthDate),
+                age, birthDate, LocalTime.now(), getIp());
+        ResultActions perform = mockMvc.perform(get(String.format("/greeting/greet?name=%s&age=%s&birthdate=%s",
+                name,age,birthDate.toString().replaceAll("-",""))));
         perform.andDo(print()).andExpect(status().isOk());
         String contentAsString = perform.andReturn().getResponse().getContentAsString();
         GreetingDTO actual = objectMapper.readValue(contentAsString, GreetingDTO.class);

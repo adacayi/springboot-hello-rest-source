@@ -16,16 +16,17 @@ import static com.sanver.trials.springboot_hello_rest_source.models.Helpers.getI
 @RequestMapping("/greeting")
 @ConfigurationProperties(prefix = "greeting")
 public class GreetingController {
-	private String greetingMessage;
+    private String greetingMessage;
 
-	public void setGreetingMessage(String greetingMessage) {
-		this.greetingMessage = greetingMessage;
-	}
+    public void setGreetingMessage(String greetingMessage) {
+        this.greetingMessage = greetingMessage;
+    }
 
-	@RequestMapping("/greet")
-	public GreetingDTO greet(@RequestParam("name") String name, @RequestParam("age") int age, @RequestParam("birthdate") String birthDateString) {
-		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-		LocalDate birthDate = LocalDate.parse(birthDateString, dateTimeFormatter);
-		return new GreetingDTO(name, String.format(greetingMessage, name, age, birthDate), age, birthDate, LocalTime.now(), getIp());
-	}
+    @RequestMapping("/greet")
+    public GreetingDTO greet(@RequestParam("name") String name, @RequestParam("birthdate") String birthDateString) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        LocalDate birthDate = LocalDate.parse(birthDateString, dateTimeFormatter);
+        int age = birthDate.until(LocalDate.now()).getYears();
+        return new GreetingDTO(name, String.format(greetingMessage, name, age, birthDate), age, birthDate, LocalTime.now(), getIp());
+    }
 }
