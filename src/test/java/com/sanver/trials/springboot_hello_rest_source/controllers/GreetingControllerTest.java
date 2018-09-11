@@ -1,7 +1,6 @@
-package com.sanver.trials.springboot_hello_rest_source;
+package com.sanver.trials.springboot_hello_rest_source.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sanver.trials.springboot_hello_rest_source.controllers.GreetingController;
 import com.sanver.trials.springboot_hello_rest_source.models.GreetingDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
