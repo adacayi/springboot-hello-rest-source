@@ -54,8 +54,8 @@ public class GreetingControllerTest {
         int age = birthDate.until(LocalDate.now()).getYears();
         GreetingDTO expectedClass = new GreetingDTO(name, String.format(greetingMessage, name, age, birthDate),
                 age, birthDate, LocalTime.now(), getIp());
-        ResultActions perform = mockMvc.perform(get(String.format("/greeting/greet?name=%s&age=%s&birthdate=%s",
-                name,age,birthDate.toString().replaceAll("-",""))));
+        ResultActions perform = mockMvc.perform(get(String.format("/greeting/greet?name=%s&birthdate=%s",
+                name,birthDate.toString().replaceAll("-",""))));
         perform.andDo(print()).andExpect(status().isOk());
         String contentAsString = perform.andReturn().getResponse().getContentAsString();
         GreetingDTO actual = objectMapper.readValue(contentAsString, GreetingDTO.class);
